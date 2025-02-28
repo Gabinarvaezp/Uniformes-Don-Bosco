@@ -174,9 +174,10 @@
                                     <select class="form-select form-select-lg" id="estadoPedido" onchange="actualizarEstado()">
                                         <option value="entregado">Entregado</option>
                                         <option value="pendiente">Pendiente</option>
+                                        <option value="abono">Abono</option>
                                     </select>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3" id="divAbono" style="display: none;">
                                     <label class="form-label">Abono</label>
                                     <input type="number" class="form-control" id="abono" placeholder="Ingrese monto del abono">
                                 </div>
@@ -624,6 +625,12 @@
                 fecha: new Date().toISOString()
             };
 
+            // Si el estado es "abono", ajustar el total
+            if (venta.estado === 'abono') {
+                const abono = parseFloat(document.getElementById('abono').value) || 0;
+                venta.total -= abono;
+            }
+
             ventasGuardadas.push(venta);
             localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
 
@@ -803,6 +810,9 @@
         // Inicialización
         document.addEventListener('DOMContentLoaded', () => {
             mostrarPrendas();
+            document.getElementById('estadoPedido').addEventListener('change', function() {
+                document.getElementById('divAbono').style.display = this.value === 'abono' ? 'block' : 'none';
+            });
         });
     </script>
 
