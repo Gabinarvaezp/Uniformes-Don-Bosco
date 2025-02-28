@@ -208,6 +208,25 @@
             </div>
         </div>
 
+        <!-- Sección Ventas Finalizadas -->
+        <div id="ventasFinalizadas" class="seccion-content">
+            <div class="card p-4">
+                <h2>Ventas Finalizadas</h2>
+                <table class="table" id="tablaVentasFinalizadas">
+                    <thead>
+                        <tr>
+                            <th>Número de Factura</th>
+                            <th>Cliente</th>
+                            <th>Teléfono</th>
+                            <th>Prendas</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
         <!-- Sección Inventario -->
         <div id="inventario" class="seccion-content">
             <div class="card p-4">
@@ -449,6 +468,8 @@
                 actualizarInventario();
             } else if (seccion === 'pedidosPendientes') {
                 actualizarTablaPedidos();
+            } else if (seccion === 'ventasFinalizadas') {
+                actualizarTablaVentasFinalizadas();
             } else if (seccion === 'totalesVentas') {
                 mostrarTotalesVentas();
             }
@@ -603,11 +624,6 @@
                 fecha: new Date().toISOString()
             };
 
-            // Si el estado es "entregado", mover a entregados
-            if (venta.estado === 'entregado') {
-                alert('Pedido entregado y movido a la lista de entregados.');
-            }
-
             ventasGuardadas.push(venta);
             localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
 
@@ -627,27 +643,59 @@
             tbody.innerHTML = '';
 
             ventasGuardadas.forEach((venta, index) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${venta.factura}</td>
-                    <td>${venta.cliente}</td>
-                    <td>${venta.telefono}</td>
-                    <td>${venta.prendas.map(p => `${p.nombre} (${p.talla})`).join(', ')}</td>
-                    <td>$${formatearPrecio(venta.total)}</td>
-                    <td>
-                        <button class="btn btn-danger btn-sm" onclick="eliminarRecibo(${index})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
+                if (venta.estado === 'pendiente') {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${venta.factura}</td>
+                        <td>${venta.cliente}</td>
+                        <td>${venta.telefono}</td>
+                        <td>${venta.prendas.map(p => `${p.nombre} (${p.talla})`).join(', ')}</td>
+                        <td>$${formatearPrecio(venta.total)}</td>
+                        <td>
+                            <button class="btn btn-success btn-sm" onclick="finalizarVenta(${index})">
+                                Finalizar
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="eliminarRecibo(${index})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                }
             });
+        }
+
+        function finalizarVenta(index) {
+            ventasGuardadas[index].estado = 'entregado';
+            localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
+            actualizarTablaPedidos();
+            actualizarTablaVentasFinalizadas();
+            alert('Venta finalizada exitosamente.');
         }
 
         function eliminarRecibo(index) {
             ventasGuardadas.splice(index, 1);
             localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
             actualizarTablaPedidos();
+        }
+
+        function actualizarTablaVentasFinalizadas() {
+            const tbody = document.querySelector('#tablaVentasFinalizadas tbody');
+            tbody.innerHTML = '';
+
+            ventasGuardadas.forEach(venta => {
+                if (venta.estado === 'entregado') {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${venta.factura}</td>
+                        <td>${venta.cliente}</td>
+                        <td>${venta.telefono}</td>
+                        <td>${venta.prendas.map(p => `${p.nombre} (${p.talla})`).join(', ')}</td>
+                        <td>$${formatearPrecio(venta.total)}</td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            });
         }
 
         function actualizarInventario() {
@@ -749,7 +797,7 @@
         }
 
         function formatearPrecio(precio) {
-            return precio.toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
+            return precio.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }).replace('COP', '').trim();
         }
 
         // Inicialización
