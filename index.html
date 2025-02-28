@@ -498,7 +498,7 @@
                     <div class="card prenda-card" onclick="seleccionarTalla('${key}', '${tipoUniforme}')">
                         <div class="card-body">
                             <h5 class="card-title">${prenda.nombre}</h5>
-                            <p class="card-text">Desde: $${formatearPrecio(obtenerPrecioMinimo(prenda))}</p>
+                            <p class="card-text">Desde: ${formatearPrecio(obtenerPrecioMinimo(prenda))}</p>
                         </div>
                     </div>
                 `;
@@ -528,7 +528,7 @@
                                 <label class="form-label">Talla</label>
                                 <select class="form-select" id="selectTalla">
                                     ${prenda.tallas.map(talla => 
-                                        `<option value="${talla}">${talla} - $${formatearPrecio(prenda.precios[talla] || prenda.precio)}</option>`
+                                        `<option value="${talla}">${talla} - ${formatearPrecio(prenda.precios[talla] || prenda.precio)}</option>`
                                     ).join('')}
                                 </select>
                             </div>
@@ -599,7 +599,7 @@
                 tr.innerHTML = `
                     <td>${prenda.nombre}</td>
                     <td>${prenda.talla}</td>
-                    <td>$${formatearPrecio(prenda.precio)}</td>
+                    <td>${formatearPrecio(prenda.precio)}</td>
                     <td>
                         <button class="btn btn-danger btn-sm" onclick="eliminarPrenda(${index})">
                             <i class="fas fa-trash"></i>
@@ -676,7 +676,7 @@
                         <td>${venta.cliente}</td>
                         <td>${venta.telefono}</td>
                         <td>${venta.prendas.map(p => `${p.nombre} (${p.talla})`).join(', ')}</td>
-                        <td>$${formatearPrecio(venta.total)}</td>
+                        <td>${formatearPrecio(venta.total)}</td>
                         <td>
                             <button class="btn btn-success btn-sm" onclick="finalizarVenta(${index})">
                                 Finalizar
@@ -717,7 +717,7 @@
                         <td>${venta.cliente}</td>
                         <td>${venta.telefono}</td>
                         <td>${venta.prendas.map(p => `${p.nombre} (${p.talla})`).join(', ')}</td>
-                        <td>$${formatearPrecio(venta.total)}</td>
+                        <td>${formatearPrecio(venta.total)}</td>
                         <td>
                             <button class="btn btn-danger btn-sm" onclick="eliminarRecibo(${ventasGuardadas.indexOf(venta)})">
                                 <i class="fas fa-trash"></i>
@@ -806,7 +806,7 @@
 
         function hacerAbono() {
             const abono = parseFloat(document.getElementById('abono').value) || 0;
-            alert(`Se ha realizado un abono de $${formatearPrecio(abono)}`);
+            alert(`Se ha realizado un abono de ${formatearPrecio(abono)}`);
         }
 
         function descargarExcel() {
