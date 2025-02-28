@@ -208,7 +208,24 @@
         <div id="inventario" class="seccion-content">
             <div class="card p-4">
                 <h2>Inventario</h2>
-                <div id="resumenInventario"></div>
+                <h3>Primaria</h3>
+                <div id="resumenInventarioPrimaria"></div>
+                <h3>Bachillerato</h3>
+                <div id="resumenInventarioBachillerato"></div>
+            </div>
+        </div>
+
+        <!-- Sección Totales de Ventas -->
+        <div id="totalesVentas" class="seccion-content">
+            <div class="card p-4">
+                <h2>Totales de Ventas</h2>
+                <div>
+                    <p>Total Efectivo: $<span id="totalEfectivo">0</span></p>
+                    <p>Total Nequi: $<span id="totalNequi">0</span></p>
+                    <p>Total Daviplata: $<span id="totalDaviplata">0</span></p>
+                </div>
+                <button class="btn btn-danger" onclick="cancelarTodo()">Cancelar Todo</button>
+                <button class="btn btn-warning" onclick="hacerAbono()">Hacer Abono</button>
             </div>
         </div>
     </div>
@@ -426,6 +443,8 @@
                 actualizarInventario();
             } else if (seccion === 'pedidosPendientes') {
                 actualizarTablaPedidos();
+            } else if (seccion === 'totalesVentas') {
+                mostrarTotalesVentas();
             }
         }
 
@@ -621,22 +640,27 @@
         }
 
         function actualizarInventario() {
-            const resumen = {};
+            const resumenPrimaria = {};
+            const resumenBachillerato = {};
             
-            ventasGuardadas
-                .filter(venta => venta.estado === 'pendiente')
-                .forEach(venta => {
-                    venta.prendas.forEach(prenda => {
-                        const key = `${prenda.nombre} - ${prenda.talla}`;
-                        resumen[key] = (resumen[key] || 0) + 1;
-                    });
+            ventasGuardadas.forEach(venta => {
+                venta.prendas.forEach(prenda => {
+                    const key = `${prenda.nombre} - ${prenda.talla}`;
+                    if (venta.estado === 'pendiente') {
+                        if (venta.metodoPago === 'primaria') {
+                            resumenPrimaria[key] = (resumenPrimaria[key] || 0) + 1;
+                        } else {
+                            resumenBachillerato[key] = (resumenBachillerato[key] || 0) + 1;
+                        }
+                    }
                 });
+            });
 
-            const inventarioDiv = document.getElementById('resumenInventario');
-            inventarioDiv.innerHTML = '<div class="row">';
+            const inventarioDivPrimaria = document.getElementById('resumenInventarioPrimaria');
+            inventarioDivPrimaria.innerHTML = '<div class="row">';
             
-            Object.entries(resumen).forEach(([prenda, cantidad]) => {
-                inventarioDiv.innerHTML += `
+            Object.entries(resumenPrimaria).forEach(([prenda, cantidad]) => {
+                inventarioDivPrimaria.innerHTML += `
                     <div class="col-md-4 mb-3">
                         <div class="card">
                             <div class="card-body">
@@ -648,7 +672,45 @@
                 `;
             });
             
-            inventarioDiv.innerHTML += '</div>';
+            inventarioDivPrimaria.innerHTML += '</div>';
+
+            const inventarioDivBachillerato = document.getElementById('resumenInventarioBachillerato');
+            inventarioDivBachillerato.innerHTML = '<div class="row">';
+            
+            Object.entries(resumenBachillerato).forEach(([prenda, cantidad]) => {
+                inventarioDivBachillerato.innerHTML += `
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">${prenda}</h5>
+                                <p class="card-text">Cantidad: ${cantidad}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            inventarioDivBachillerato.innerHTML += '</div>';
+        }
+
+        function mostrarTotalesVentas() {
+            const totalEfectivo = ventasGuardadas.filter(v => v.metodoPago === 'efectivo').reduce((sum, v) => sum + v.total, 0);
+            const totalNequi = ventasGuardadas.filter(v => v.metodoPago === 'nequi').reduce((sum, v) => sum + v.total, 0);
+            const totalDaviplata = ventasGuardadas.filter(v => v.metodoPago === 'daviplata').reduce((sum, v) => sum + v.total, 0);
+
+            document.getElementById('totalEfectivo').textContent = totalEfectivo.toLocaleString();
+            document.getElementById('totalNequi').textContent = totalNequi.toLocaleString();
+            document.getElementById('totalDaviplata').textContent = totalDaviplata.toLocaleString();
+        }
+
+        function cancelarTodo() {
+            // Implementar lógica para cancelar todas las ventas
+            alert('Todas las ventas han sido canceladas.');
+        }
+
+        function hacerAbono() {
+            // Implementar lógica para hacer un abono
+            alert('Se ha realizado un abono.');
         }
 
         function descargarExcel() {
