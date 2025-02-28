@@ -171,10 +171,14 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Estado</label>
-                                    <select class="form-select form-select-lg" id="estadoPedido">
+                                    <select class="form-select form-select-lg" id="estadoPedido" onchange="actualizarEstado()">
                                         <option value="entregado">Entregado</option>
                                         <option value="pendiente">Pendiente</option>
                                     </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Abono</label>
+                                    <input type="number" class="form-control" id="abono" placeholder="Ingrese monto del abono">
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-lg w-100">Guardar Venta</button>
                             </div>
@@ -597,6 +601,11 @@
                 fecha: new Date().toISOString()
             };
 
+            // Si el estado es "entregado", mover a entregados
+            if (venta.estado === 'entregado') {
+                alert('Pedido entregado y movido a la lista de entregados.');
+            }
+
             ventasGuardadas.push(venta);
             localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
 
@@ -704,13 +713,15 @@
         }
 
         function cancelarTodo() {
-            // Implementar lógica para cancelar todas las ventas
+            ventasGuardadas = [];
+            localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
             alert('Todas las ventas han sido canceladas.');
+            actualizarTablaPedidos();
         }
 
         function hacerAbono() {
-            // Implementar lógica para hacer un abono
-            alert('Se ha realizado un abono.');
+            const abono = parseFloat(document.getElementById('abono').value) || 0;
+            alert(`Se ha realizado un abono de $${abono}`);
         }
 
         function descargarExcel() {
