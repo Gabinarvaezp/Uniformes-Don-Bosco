@@ -227,6 +227,8 @@
                     <p>Total Efectivo: $<span id="totalEfectivo">0</span></p>
                     <p>Total Nequi: $<span id="totalNequi">0</span></p>
                     <p>Total Daviplata: $<span id="totalDaviplata">0</span></p>
+                    <p>Ventas Totales: $<span id="ventasTotales">0</span></p>
+                    <p>Ventas Finalizadas: $<span id="ventasFinalizadas">0</span></p>
                 </div>
                 <button class="btn btn-danger" onclick="cancelarTodo()">Cancelar Todo</button>
                 <button class="btn btn-warning" onclick="hacerAbono()">Hacer Abono</button>
@@ -464,7 +466,7 @@
                     <div class="card prenda-card" onclick="seleccionarTalla('${key}', '${tipoUniforme}')">
                         <div class="card-body">
                             <h5 class="card-title">${prenda.nombre}</h5>
-                            <p class="card-text">Desde: $${obtenerPrecioMinimo(prenda)}</p>
+                            <p class="card-text">Desde: $${formatearPrecio(obtenerPrecioMinimo(prenda))}</p>
                         </div>
                     </div>
                 `;
@@ -494,7 +496,7 @@
                                 <label class="form-label">Talla</label>
                                 <select class="form-select" id="selectTalla">
                                     ${prenda.tallas.map(talla => 
-                                        `<option value="${talla}">${talla} - $${prenda.precios[talla] || prenda.precio}</option>`
+                                        `<option value="${talla}">${talla} - $${formatearPrecio(prenda.precios[talla] || prenda.precio)}</option>`
                                     ).join('')}
                                 </select>
                             </div>
@@ -565,7 +567,7 @@
                 tr.innerHTML = `
                     <td>${prenda.nombre}</td>
                     <td>${prenda.talla}</td>
-                    <td>$${prenda.precio.toLocaleString()}</td>
+                    <td>$${formatearPrecio(prenda.precio)}</td>
                     <td>
                         <button class="btn btn-danger btn-sm" onclick="eliminarPrenda(${index})">
                             <i class="fas fa-trash"></i>
@@ -584,7 +586,7 @@
 
         function actualizarTotal() {
             const total = prendasSeleccionadas.reduce((sum, prenda) => sum + prenda.precio, 0);
-            document.getElementById('totalVenta').textContent = total.toLocaleString();
+            document.getElementById('totalVenta').textContent = formatearPrecio(total);
         }
 
         function guardarVenta(event) {
@@ -631,7 +633,7 @@
                     <td>${venta.cliente}</td>
                     <td>${venta.telefono}</td>
                     <td>${venta.prendas.map(p => `${p.nombre} (${p.talla})`).join(', ')}</td>
-                    <td>$${venta.total.toLocaleString()}</td>
+                    <td>$${formatearPrecio(venta.total)}</td>
                     <td>
                         <button class="btn btn-danger btn-sm" onclick="eliminarRecibo(${index})">
                             <i class="fas fa-trash"></i>
@@ -706,10 +708,14 @@
             const totalEfectivo = ventasGuardadas.filter(v => v.metodoPago === 'efectivo').reduce((sum, v) => sum + v.total, 0);
             const totalNequi = ventasGuardadas.filter(v => v.metodoPago === 'nequi').reduce((sum, v) => sum + v.total, 0);
             const totalDaviplata = ventasGuardadas.filter(v => v.metodoPago === 'daviplata').reduce((sum, v) => sum + v.total, 0);
+            const totalVentas = ventasGuardadas.reduce((sum, v) => sum + v.total, 0);
+            const ventasFinalizadas = ventasGuardadas.filter(v => v.estado === 'entregado').reduce((sum, v) => sum + v.total, 0);
 
-            document.getElementById('totalEfectivo').textContent = totalEfectivo.toLocaleString();
-            document.getElementById('totalNequi').textContent = totalNequi.toLocaleString();
-            document.getElementById('totalDaviplata').textContent = totalDaviplata.toLocaleString();
+            document.getElementById('totalEfectivo').textContent = formatearPrecio(totalEfectivo);
+            document.getElementById('totalNequi').textContent = formatearPrecio(totalNequi);
+            document.getElementById('totalDaviplata').textContent = formatearPrecio(totalDaviplata);
+            document.getElementById('ventasTotales').textContent = formatearPrecio(totalVentas);
+            document.getElementById('ventasFinalizadas').textContent = formatearPrecio(ventasFinalizadas);
         }
 
         function cancelarTodo() {
@@ -721,7 +727,7 @@
 
         function hacerAbono() {
             const abono = parseFloat(document.getElementById('abono').value) || 0;
-            alert(`Se ha realizado un abono de $${abono}`);
+            alert(`Se ha realizado un abono de $${formatearPrecio(abono)}`);
         }
 
         function descargarExcel() {
@@ -731,7 +737,7 @@
                 'Teléfono': venta.telefono,
                 'Método Pago': venta.metodoPago,
                 'Estado': venta.estado,
-                'Total': venta.total,
+                'Total': formatearPrecio(venta.total),
                 'Fecha': new Date(venta.fecha).toLocaleDateString(),
                 'Prendas': venta.prendas.map(p => `${p.nombre} (${p.talla})`).join(', ')
             }));
@@ -740,6 +746,10 @@
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, "Ventas");
             XLSX.writeFile(workbook, `Ventas_${new Date().toLocaleDateString()}.xlsx`);
+        }
+
+        function formatearPrecio(precio) {
+            return precio.toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
         }
 
         // Inicialización
