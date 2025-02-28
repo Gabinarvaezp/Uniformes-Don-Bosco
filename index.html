@@ -176,6 +176,9 @@
                                         <option value="cancelado">Cancelado</option>
                                         <option value="pendiente">Pendiente</option>
                                         <option value="abono">Abono</option>
+                                        <option value="cancelado_y_entregado">Cancelado y Entregado</option>
+                                        <option value="cancelado_y_pendiente">Cancelado y Pendiente</option>
+                                        <option value="abono_y_pendiente">Abono y Pendiente</option>
                                     </select>
                                 </div>
                                 <div class="mb-3" id="divAbono" style="display: none;">
@@ -657,7 +660,7 @@
             tbody.innerHTML = '';
 
             ventasGuardadas.forEach((venta, index) => {
-                if (venta.estado === 'pendiente' || venta.estado === 'abono') {
+                if (venta.estado === 'pendiente' || venta.estado === 'abono' || venta.estado === 'cancelado_y_pendiente') {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>${venta.factura}</td>
@@ -680,7 +683,12 @@
         }
 
         function finalizarVenta(index) {
-            ventasGuardadas[index].estado = 'entregado';
+            const venta = ventasGuardadas[index];
+            if (venta.estado === 'cancelado_y_pendiente') {
+                // Lógica para manejar las prendas que quedan pendientes
+                // Aquí puedes agregar la lógica para pasar las prendas a inventario
+            }
+            venta.estado = 'entregado';
             localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
             actualizarTablaPedidos();
             actualizarTablaVentasFinalizadas();
@@ -724,7 +732,7 @@
             ventasGuardadas.forEach(venta => {
                 venta.prendas.forEach(prenda => {
                     const key = `${prenda.nombre} - ${prenda.talla}`;
-                    if (venta.estado === 'pendiente' || venta.estado === 'abono') {
+                    if (venta.estado === 'pendiente' || venta.estado === 'abono' || venta.estado === 'cancelado_y_pendiente') {
                         if (venta.metodoPago === 'primaria') {
                             resumenPrimaria[key] = (resumenPrimaria[key] || 0) + 1;
                         } else {
