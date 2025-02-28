@@ -161,15 +161,7 @@
                                 <div class="total-section mb-3">
                                     Total: $<span id="totalVenta">0</span>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Método de Pago</label>
-                                    <select class="form-select form-select-lg" id="metodoPago">
-                                        <option value="efectivo">Efectivo</option>
-                                        <option value="nequi">Nequi</option>
-                                        <option value="daviplata">Daviplata</option>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-success w-100">Guardar Venta</button>
+                                <button type="submit" class="btn btn-success btn-lg w-100">Guardar Venta</button>
                             </div>
                         </div>
                     </div>
@@ -207,6 +199,8 @@
     </div>
 
     <script>
+        <script>
+       <script>
         const PRENDAS = {
             primaria: {
                 buso_sudadera: {
@@ -395,74 +389,35 @@
             }
         };
 
-        let prendasSeleccionadas = [];
-        let ventasGuardadas = JSON.parse(localStorage.getItem('ventas')) || [];
-
-        function mostrarSeccion(seccion) {
-            document.querySelectorAll('.seccion-content').forEach(div => {
-                div.style.display = 'none';
-            });
-            document.getElementById(seccion).style.display = 'block';
-        }
 
         function mostrarPrendas() {
             const tipoUniforme = document.getElementById('tipoUniforme').value;
             const listaPrendas = document.getElementById('listaPrendas');
             listaPrendas.innerHTML = '';
 
-            Object.keys(PRENDAS[tipoUniforme]).forEach(prendaKey => {
-                const prenda = PRENDAS[tipoUniforme][prendaKey];
+            for (const key in PRENDAS[tipoUniforme]) {
+                const prenda = PRENDAS[tipoUniforme][key];
                 const prendaDiv = document.createElement('div');
                 prendaDiv.className = 'col-md-4 mb-3';
                 prendaDiv.innerHTML = `
-                    <div class="card prenda-card" onclick="seleccionarTalla('${prendaKey}', '${tipoUniforme}')">
+                    <div class="card prenda-card" onclick="seleccionarTalla('${key}', '${tipoUniforme}')">
                         <div class="card-body">
                             <h5 class="card-title">${prenda.nombre}</h5>
                         </div>
                     </div>
                 `;
                 listaPrendas.appendChild(prendaDiv);
-            });
+            }
         }
 
         function seleccionarTalla(prendaKey, tipoUniforme) {
             const prenda = PRENDAS[tipoUniforme][prendaKey];
-            const tallaSelect = document.createElement('select');
-            tallaSelect.className = 'form-select';
-            tallaSelect.id = 'tallaSelect';
-
-            prenda.tallas.forEach(talla => {
-                const option = document.createElement('option');
-                option.value = talla;
-                option.textContent = talla;
-                tallaSelect.appendChild(option);
-            });
-
-            const modalContent = document.createElement('div');
-            modalContent.innerHTML = `
-                <p>Seleccione la talla para ${prenda.nombre}:</p>
-            `;
-            modalContent.appendChild(tallaSelect);
-
-            const modal = new bootstrap.Modal(document.createElement('div'));
-            modal._element.className = 'modal fade';
-            modal._element.innerHTML = `
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Seleccionar Talla</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">${modalContent.innerHTML}</div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" onclick="agregarPrenda('${prendaKey}', '${tipoUniforme}', tallaSelect.value)">Aceptar</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(modal._element);
-            modal.show();
+            const talla = prompt(`Seleccione la talla para ${prenda.nombre}:\n${prenda.tallas.join(', ')}`);
+            if (prenda.tallas.includes(talla)) {
+                agregarPrenda(prendaKey, tipoUniforme, talla);
+            } else {
+                alert('Talla no válida. Intente de nuevo.');
+            }
         }
 
         function agregarPrenda(prendaKey, tipoUniforme, talla) {
@@ -475,7 +430,6 @@
             });
             actualizarTablaPrendas();
             actualizarTotal();
-            bootstrap.Modal.getInstance(document.querySelector('.modal')).hide();
         }
 
         function actualizarTablaPrendas() {
