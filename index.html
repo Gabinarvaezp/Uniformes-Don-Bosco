@@ -228,56 +228,65 @@
                     nombre: "Pantalón Sudadera",
                     tallas: ['4', '6', '8', '10', '12', '14', '16', 'S'],
                     precios: {
-                       '4':40000, '6': 40000, '8': 40000, '10': 45000, '12': 45000, '14': 50000, '16': 50000, 'S': 55000
+                       '4': 40000, '6': 40000, '8': 40000, '10': 45000, 
+                       '12': 45000, '14': 50000, '16': 50000, 'S': 55000
                     }
                 },
                 camiseta_deportiva: {
                     nombre: "Camiseta Deportiva",
                     tallas: ['4', '6', '8', '10', '12', '14', '16', 'S'],
                     precios: {
-                        '4': 25000, '6': 25000, '8': 25000, '10': 30000, '12': 30000, '14': 35000, '16': 35000, 'S': 35000
+                        '4': 25000, '6': 25000, '8': 25000, '10': 30000, 
+                        '12': 30000, '14': 35000, '16': 35000, 'S': 35000
                     }
                 },
                 pantaloneta: {
                     nombre: "Pantaloneta",
                     tallas: ['4', '6', '8', '10', '12', '14', '16', 'S'],
                     precios: {
-                        '4': 20000, '6': 20000, '8': 20000, '10': 25000, '12': 25000, '14': 30000, '16': 30000, 'S': 30000
+                        '4': 20000, '6': 20000, '8': 20000, '10': 25000, 
+                        '12': 25000, '14': 30000, '16': 30000, 'S': 30000
                     }
                 },
                 pantalon_nino: {
                     nombre: "Pantalón Niño",
                     tallas: ['4', '6', '8', '10', '12', '14', '16', 'S'],
                     precios: {
-                        '4': 38000, '6': 38000, '8': 38000, '10': 40000, '12': 40000, '14': 45000, '16': 45000, 'S': 45000
+                        '4': 38000, '6': 38000, '8': 38000, '10': 40000, 
+                        '12': 40000, '14': 45000, '16': 45000, 'S': 45000
                     }
                 },
                 camibuso_nino: {
                     nombre: "Camibuso Niño",
                     tallas: ['4', '6', '8', '10', '12', '14', '16', 'S'],
                     precios: {
-                        '4': 35000, '6': 35000, '8': 35000, '10': 38000, '12': 38000, '14': 42000, '16': 42000, 'S': 42000
+                        '4': 35000, '6': 35000, '8': 35000, '10': 38000, 
+                        '12': 38000, '14': 42000, '16': 42000, 'S': 42000
                     }
                 },
                 jardinera: {
                     nombre: "Jardinera (Grado 3, 4, 5)",
                     tallas: ['10', '12', '14', '16'],
                     precios: {
-                       '10': 78000, '12': 78000,'14': 80000, '16': 82000
-                    }
+                       '10': 78000, '12': 78000, '14': 80000, '16': 82000
+                    },
+                    medidas: true // Indica que se requieren medidas adicionales
                 },
                 bata_nina: {
                     nombre: "Bata Niña (Grado 0, 1, 2)",
                     tallas: ['4', '6', '8', '10', '12', '14'],
                     precios: {
-                         '4': 60000, '6': 60000, '8': 64000, '10': 68000, '12': 70000, '14': 79000
-                    }
+                         '4': 60000, '6': 60000, '8': 64000, '10': 68000, 
+                         '12': 70000, '14': 79000
+                    },
+                    medidas: true // Indica que se requieren medidas adicionales
                 },
                 chaqueta_diario: {
                     nombre: "Chaqueta Diario",
                     tallas: ['4', '6', '8', '10', '12', '14', '16', 'S'],
                     precios: {
-                        '4': 75000, '6': 75000, '8': 75000, '10': 78000, '12': 78000, '14': 80000, '16': 80000, 'S': 83000
+                        '4': 75000, '6': 75000, '8': 75000, '10': 78000, 
+                        '12': 78000, '14': 80000, '16': 80000, 'S': 83000
                     }
                 }
             },
@@ -328,7 +337,8 @@
                     precios: {
                         '10': 78000, '12': 80000, '14': 82000, '16': 84000, 
                         'S': 85000, 'M': 86000, 'L': 87000, 'XL': 88000, 'XXL': 89000
-                    }
+                    },
+                    medidas: true // Indica que se requieren medidas adicionales
                 },
                 camiseta_polo: {
                     nombre: "Camiseta Polo",
@@ -389,14 +399,16 @@
                     nombre: "Bata Azul",
                     tallas: ['12', '14', '16', 'S', 'M', 'L', 'XL'],
                     precios: {
-                        '12': 55000, '14': 55000, '16': 55000, 'S': 55000, 'M': 55000, 'L': 55000, 'XL': 55000
+                        '12': 55000, '14': 55000, '16': 55000, 'S': 55000, 
+                        'M': 55000, 'L': 55000, 'XL': 55000
                     }
                 },
                 bata_blanca: {
                     nombre: "Bata Blanca",
                     tallas: ['12', '14', '16', 'S', 'M', 'L', 'XL'],
                     precios: {
-                        '12': 55000, '14': 55000, '16': 55000, 'S': 55000, 'M': 55000, 'L': 55000, 'XL': 55000
+                        '12': 55000, '14': 55000, '16': 55000, 'S': 55000, 
+                        'M': 55000, 'L': 55000, 'XL': 55000
                     }
                 }
             }
@@ -463,6 +475,20 @@
                                     ).join('')}
                                 </select>
                             </div>
+                            ${prenda.medidas ? `
+                            <div class="mb-3">
+                                <label class="form-label">Largo (cm)</label>
+                                <input type="number" class="form-control" id="largo" placeholder="Ingrese el largo">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Busto (cm)</label>
+                                <input type="number" class="form-control" id="busto" placeholder="Ingrese la medida del busto">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Cadera (cm)</label>
+                                <input type="number" class="form-control" id="cadera" placeholder="Ingrese la medida de la cadera">
+                            </div>
+                            ` : ''}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" onclick="agregarPrenda('${prendaKey}', '${tipoUniforme}')" data-bs-dismiss="modal">
@@ -487,10 +513,20 @@
             const talla = document.getElementById('selectTalla').value;
             const precio = prenda.precios[talla];
 
+            // Obtener medidas adicionales
+            const largo = document.getElementById('largo') ? document.getElementById('largo').value : null;
+            const busto = document.getElementById('busto') ? document.getElementById('busto').value : null;
+            const cadera = document.getElementById('cadera') ? document.getElementById('cadera').value : null;
+
             prendasSeleccionadas.push({
                 nombre: prenda.nombre,
                 talla,
-                precio
+                precio,
+                medidas: {
+                    largo,
+                    busto,
+                    cadera
+                }
             });
 
             actualizarTablaPrendas();
