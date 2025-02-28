@@ -227,6 +227,7 @@
                             <th>Teléfono</th>
                             <th>Prendas</th>
                             <th>Total</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -656,7 +657,7 @@
             tbody.innerHTML = '';
 
             ventasGuardadas.forEach((venta, index) => {
-                if (venta.estado === 'pendiente') {
+                if (venta.estado === 'pendiente' || venta.estado === 'abono') {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>${venta.factura}</td>
@@ -705,6 +706,11 @@
                         <td>${venta.telefono}</td>
                         <td>${venta.prendas.map(p => `${p.nombre} (${p.talla})`).join(', ')}</td>
                         <td>$${formatearPrecio(venta.total)}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" onclick="eliminarRecibo(${ventasGuardadas.indexOf(venta)})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
                     `;
                     tbody.appendChild(tr);
                 }
@@ -718,7 +724,7 @@
             ventasGuardadas.forEach(venta => {
                 venta.prendas.forEach(prenda => {
                     const key = `${prenda.nombre} - ${prenda.talla}`;
-                    if (venta.estado === 'pendiente') {
+                    if (venta.estado === 'pendiente' || venta.estado === 'abono') {
                         if (venta.metodoPago === 'primaria') {
                             resumenPrimaria[key] = (resumenPrimaria[key] || 0) + 1;
                         } else {
