@@ -172,18 +172,18 @@
                                 <div class="mb-3">
                                     <label class="form-label">Estado</label>
                                     <select class="form-select form-select-lg" id="estadoPedido" onchange="actualizarEstado()">
-                                        <option value="entregado">Entregado</option>
-                                        <option value="cancelado">Cancelado</option>
-                                        <option value="pendiente">Pendiente</option>
-                                        <option value="abono">Abono</option>
-                                        <option value="cancelado_y_entregado">Cancelado y Entregado</option>
-                                        <option value="cancelado_y_pendiente">Cancelado y Pendiente</option>
-                                        <option value="abono_y_pendiente">Abono y Pendiente</option>
+                                        <option value="cancelado_entregado">Cancelado y Entregado</option>
+                                        <option value="cancelado_pendiente">Cancelado y Pendiente</option>
+                                        <option value="abono_pendiente">Abono y Pendiente</option>
                                     </select>
                                 </div>
                                 <div class="mb-3" id="divAbono" style="display: none;">
                                     <label class="form-label">Abono</label>
                                     <input type="number" class="form-control" id="abono" placeholder="Ingrese monto del abono">
+                                </div>
+                                <div class="mb-3" id="divPrendasEntregadas" style="display: none;">
+                                    <label class="form-label">Prendas Entregadas</label>
+                                    <input type="text" class="form-control" id="prendasEntregadas" placeholder="Ingrese las prendas entregadas">
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-lg w-100">Guardar Venta</button>
                             </div>
@@ -632,11 +632,12 @@
                 estado: document.getElementById('estadoPedido').value,
                 prendas: prendasSeleccionadas,
                 total: prendasSeleccionadas.reduce((sum, prenda) => sum + prenda.precio, 0),
-                fecha: new Date().toISOString()
+                fecha: new Date().toISOString(),
+                prendasEntregadas: document.getElementById('prendasEntregadas').value || ''
             };
 
             // Si el estado es "abono", ajustar el total
-            if (venta.estado === 'abono') {
+            if (venta.estado === 'abono_pendiente') {
                 const abono = parseFloat(document.getElementById('abono').value) || 0;
                 venta.total -= abono;
             }
@@ -653,6 +654,14 @@
             prendasSeleccionadas = [];
             actualizarTablaPrendas();
             actualizarTotal();
+            document.getElementById('divAbono').style.display = 'none';
+            document.getElementById('divPrendasEntregadas').style.display = 'none';
+        }
+
+        function actualizarEstado() {
+            const estado = document.getElementById('estadoPedido').value;
+            document.getElementById('divAbono').style.display = (estado === 'abono_pendiente') ? 'block' : 'none';
+            document.getElementById('divPrendasEntregadas').style.display = (estado === 'cancelado_pendiente' || estado === 'abono_pendiente') ? 'block' : 'none';
         }
 
         function actualizarTablaPedidos() {
@@ -660,7 +669,7 @@
             tbody.innerHTML = '';
 
             ventasGuardadas.forEach((venta, index) => {
-                if (venta.estado === 'pendiente' || venta.estado === 'abono' || venta.estado === 'cancelado_y_pendiente') {
+                if (venta.estado === 'cancelado_pendiente' || venta.estado === 'abono_pendiente') {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>${venta.factura}</td>
@@ -683,12 +692,7 @@
         }
 
         function finalizarVenta(index) {
-            const venta = ventasGuardadas[index];
-            if (venta.estado === 'cancelado_y_pendiente') {
-                // Lógica para manejar las prendas que quedan pendientes
-                // Aquí puedes agregar la lógica para pasar las prendas a inventario
-            }
-            venta.estado = 'entregado';
+            ventasGuardadas[index].estado = 'cancelado_entregado';
             localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
             actualizarTablaPedidos();
             actualizarTablaVentasFinalizadas();
@@ -706,7 +710,7 @@
             tbody.innerHTML = '';
 
             ventasGuardadas.forEach(venta => {
-                if (venta.estado === 'entregado') {
+                if (venta.estado === 'cancelado_entregado') {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>${venta.factura}</td>
@@ -732,7 +736,7 @@
             ventasGuardadas.forEach(venta => {
                 venta.prendas.forEach(prenda => {
                     const key = `${prenda.nombre} - ${prenda.talla}`;
-                    if (venta.estado === 'pendiente' || venta.estado === 'abono' || venta.estado === 'cancelado_y_pendiente') {
+                    if (venta.estado === 'cancelado_pendiente' || venta.estado === 'abono_pendiente') {
                         if (venta.metodoPago === 'primaria') {
                             resumenPrimaria[key] = (resumenPrimaria[key] || 0) + 1;
                         } else {
@@ -784,7 +788,7 @@
             const totalNequi = ventasGuardadas.filter(v => v.metodoPago === 'nequi').reduce((sum, v) => sum + v.total, 0);
             const totalDaviplata = ventasGuardadas.filter(v => v.metodoPago === 'daviplata').reduce((sum, v) => sum + v.total, 0);
             const totalVentas = ventasGuardadas.reduce((sum, v) => sum + v.total, 0);
-            const ventasFinalizadas = ventasGuardadas.filter(v => v.estado === 'entregado').reduce((sum, v) => sum + v.total, 0);
+            const ventasFinalizadas = ventasGuardadas.filter(v => v.estado === 'cancelado_entregado').reduce((sum, v) => sum + v.total, 0);
 
             document.getElementById('totalEfectivo').textContent = formatearPrecio(totalEfectivo);
             document.getElementById('totalNequi').textContent = formatearPrecio(totalNequi);
@@ -831,7 +835,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             mostrarPrendas();
             document.getElementById('estadoPedido').addEventListener('change', function() {
-                document.getElementById('divAbono').style.display = this.value === 'abono' ? 'block' : 'none';
+                actualizarEstado();
             });
         });
     </script>
