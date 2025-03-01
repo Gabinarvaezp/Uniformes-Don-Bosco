@@ -494,16 +494,17 @@
             document.getElementById('divAbono').style.display = (estado === 'abono_pendiente') ? 'block' : 'none';
             document.getElementById('divPrendasEntregadas').style.display = (estado === 'cancelado_pendiente' || estado === 'abono_pendiente') ? 'block' : 'none';
 
-            // Cargar las prendas seleccionadas en el menú desplegable
+            // Llenar el menú desplegable de prendas entregadas
             const prendasEntregadasSelect = document.getElementById('prendasEntregadasSelect');
-            prendasEntregadasSelect.innerHTML = ''; // Reiniciar opciones
-
-            prendasSeleccionadas.forEach(prenda => {
-                const option = document.createElement('option');
-                option.value = prenda.nombre; // O el identificador que desees
-                option.textContent = `${prenda.nombre} (${prenda.talla})`;
-                prendasEntregadasSelect.appendChild(option);
-            });
+            prendasEntregadasSelect.innerHTML = '';
+            if (estado === 'cancelado_pendiente' || estado === 'abono_pendiente') {
+                prendasSeleccionadas.forEach(prenda => {
+                    const option = document.createElement('option');
+                    option.value = prenda.nombre;
+                    option.textContent = `${prenda.nombre} (${prenda.talla})`;
+                    prendasEntregadasSelect.appendChild(option);
+                });
+            }
         }
 
         function actualizarSaldo() {
@@ -519,7 +520,6 @@
 
             ventasGuardadas.forEach((venta, index) => {
                 const tr = document.createElement('tr');
-                tr.className = (venta.estado === 'cancelado_entregado') ? 'entregado' : '';
                 tr.innerHTML = `
                     <td>${venta.factura}</td>
                     <td>${venta.cliente}</td>
@@ -535,6 +535,9 @@
                         </button>
                     </td>
                 `;
+                if (venta.estado === 'cancelado_entregado') {
+                    tr.classList.add('entregado');
+                }
                 tbody.appendChild(tr);
             });
         }
