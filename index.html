@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -12,6 +11,7 @@
             background-color: #f8f9fa;
             font-family: 'Arial', sans-serif;
             padding: 20px;
+            font-size: 1.2rem; /* Aumentar tamaño de fuente general */
         }
 
         .menu-btn {
@@ -20,12 +20,12 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem; /* Aumentar tamaño de fuente en botones */
             margin-bottom: 20px;
         }
 
         .menu-btn i {
-            font-size: 2rem;
+            font-size: 2.5rem; /* Aumentar tamaño de iconos */
             margin-bottom: 10px;
         }
 
@@ -33,48 +33,21 @@
             border-radius: 15px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
-        }
-
-        .prenda-card {
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .prenda-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .seccion-content {
-            display: none;
-        }
-
-        #nuevaVenta {
-            display: block;
-        }
-
-        .form-control-lg, .form-select-lg {
-            font-size: 1.1rem;
-            padding: 0.8rem;
+            background-color: #ffffff; /* Mejorar contraste de colores */
         }
 
         .total-section {
-            font-size: 1.5rem;
+            font-size: 1.8rem; /* Aumentar tamaño de fuente en total */
             font-weight: bold;
         }
 
-        .entregado {
-            background-color: #d4edda; /* Color verde claro para entregados */
+        /* Mejorar contraste de colores en botones */
+        .btn-primary {
+            background-color: #007bff; /* Color más fuerte */
+            border-color: #007bff;
         }
-
-        @media (max-width: 768px) {
-            .menu-btn {
-                font-size: 1.2rem; /* Ajusta el tamaño de fuente en móviles */
-            }
-
-            .total-section {
-                font-size: 1.2rem; /* Ajusta el tamaño de la sección total */
-            }
+        .btn-primary:hover {
+            background-color: #0056b3; /* Color más oscuro al pasar el mouse */
         }
     </style>
 </head>
@@ -246,10 +219,6 @@
 
         <!-- Sección Inventario -->
         <div id="inventario" class="seccion-content">
-            <div class="card p-4">
-                <h2>Inventario</h2>
-                <h3>Primaria</h3>
-                <div id="resumenInventarioPrimaria"></div>
                 <h3>Bachillerato</h3>
                 <div id="resumenInventarioBachillerato"></div>
             </div>
@@ -283,415 +252,643 @@
                         '12': 76000, '14': 80000, '16': 80000, 'S': 85000
                     }
                 },
-                // ... otras prendas ...
+                pantalon_sudadera: {
+                    nombre: "Pantalón Sudadera",
+                    tallas: ['4', '6', '8', '10', '12', '14', '16', 'S'],
+                    precios: {
+                        '4': 40000, '6': 40000, '8': 40000, '10': 45000, 
+                        '12': 45000, '14': 50000, '16': 50000, 'S': 55000
+                    }
+                },
+                camiseta_deportiva: {
+                    nombre: "Camiseta Deportiva",
+                    tallas: ['4', '6', '8', '10', '12', '14', '16', 'S'],
+                    precios: {
+                        '4': 25000, '6': 25000, '8': 25000, '10': 30000, 
+                        '12': 30000, '14': 35000, '16': 35000, 'S': 35000
+                    }
+                },
+                pantaloneta: {
+                    nombre: "Pantaloneta",
+                    tallas: ['4', '6', '8', '10', '12', '14', '16', 'S'],
+                    precios: {
+                        '4': 20000, '6': 20000, '8': 20000, '10': 22000, 
+                        '12': 22000, '14': 25000, '16': 25000, 'S': 28000
+                    }
+                },
+                pantalon_nino: {
+                    nombre: "Pantalón Niño",
+                    tallas: ['6', '8', '10', '12', '14', '16', 'S'],
+                    precios: {
+                        '6': 38000, '10': 40000, '14': 45000, 'S': 45000
+                    }
+                },
+                camibuso_nino: {
+                    nombre: "Camibuso Niño",
+                    tallas: ['6', '8', '10', '12', '14', '16', 'S'],
+                    precios: {
+                        '6': 35000, '10': 38000, '14': 40000, 'S': 42000
+                    }
+                },
+                jardinera: {
+                    nombre: "Jardinera (Grado 3, 4, 5)",
+                    tallas: ['10', '12', '14', '16'],
+                    precios: {
+                        '10': 78000, '12': 78000, '14': 80000, '16': 82000
+                    },
+                    medidas: true // Indica que tiene medidas adicionales
+                },
+                bata_nina: {
+                    nombre: "Bata Niña (Grado 0, 1, 2)",
+                    tallas: ['4', '6', '8', '10', '12', '14'],
+                    precios: {
+                        '6': 60000, '8': 64000, '10': 68000, '12': 70000, '14': 79000
+                    },
+                    medidas: true // Indica que tiene medidas adicionales
+                },
+                chaqueta_diario: {
+                    nombre: "Chaqueta Diario",
+                    tallas: ['4', '6', '8', '10', '12', '14', '16', 'S'],
+                    precios: {
+                        '4': 75000, '6': 75000, '8': 75000, '10': 78000, '12': 78000, '14': 80000, '16': 80000, 'S': 83000
+                    }
+                }
             },
             bachillerato: {
                 sudadera: {
                     nombre: "Sudadera",
                     tallas: ['10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'],
                     precios: {
-                        '10': 115000, '12': 115000, '14': 120000, '16': 140000, 
-                        'S': 145000, 'M': 150000, 'L': 155000, 'XL': 160000, 'XXL': 165000
+                        '10': 115000, '12': 115000, '14': 120000, '16': 130000,
+                        'S': 140000, 'M': 145000, 'L': 150000, 'XL': 155000, 'XXL': 160000
                     }
                 },
-                // ... otras prendas ...
+                chaqueta_sudadera: {
+                    nombre: "Chaqueta Sudadera",
+                    tallas: ['10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'],
+                    precios: {
+                        '10': 68000, '12': 70000, '14': 74000, '16': 80000,
+                        'S': 85000, 'M': 90000, 'L': 90000, 'XL': 95000, 'XXL': 97000
+                    }
+                },
+                pantalon_sudadera: {
+                    nombre: "Pantalón Sudadera",
+                    tallas: ['10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'],
+                    precios: {
+                        '10': 46000, '12': 46000, '14': 48000, '16': 51000,
+                        'S': 53000, 'M': 55000, 'L': 58000, 'XL': 62000, 'XXL': 65000
+                    }
+                },
+                chaqueta_diario: {
+                    nombre: "Chaqueta Diario",
+                    tallas: ['10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'],
+                    precios: {
+                        '10': 78000, '12': 78000, '14': 80000, '16': 80000,
+                        'S': 85000, 'M': 90000, 'L': 90000, 'XL': 95000, 'XXL': 100000
+                    }
+                },
+                saco_azul: {
+                    nombre: "Saco Azul",
+                    tallas: ['10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'],
+                    precios: {
+                        '10': 64000, '12': 64000, '14': 66000, '16': 67000,
+                        'S': 70000, 'M': 72000, 'L': 75000, 'XL': 78000, 'XXL': 80000
+                    }
+                },
+                jardinera: {
+                    nombre: "Jardinera",
+                    tallas: ['10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'],
+                    precios: {
+                        '10': 78000, '12': 80000, '14': 82000, '16': 84000, 
+                        'S': 85000, 'M': 86000, 'L': 87000, 'XL': 88000, 'XXL': 89000
+                    }
+                },
+                camiseta_polo: {
+                    nombre: "Camiseta Polo",
+                    tallas: ['10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'],
+                    precios: {
+                        '10': 28000, '12': 28000, '14': 30000, '16': 32000, 
+                        'S': 34000, 'M': 36000, 'L': 38000, 'XL': 40000, 'XXL': 42000
+                    }
+                },
+                camiseta_deportiva: {
+                    nombre: "Camiseta Deportiva",
+                    tallas: ['10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'],
+                    precios: {
+                        '10': 22000, '12': 23000, '14': 24000, '16': 25000, 
+                        'S': 26000, 'M': 27000, 'L': 28000, 'XL': 29000, 'XXL': 30000
+                    }
+                },
+                pantaloneta: {
+                    nombre: "Pantaloneta",
+                    tallas: ['10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'],
+                    precios: {
+                        '10': 22000, '12': 23000, '14': 24000, '16': 25000, 
+                        'S': 26000, 'M': 27000, 'L': 28000, 'XL': 29000, 'XXL': 30000
+                    }
+                },
+                pantalon_negro_lino: {
+                    nombre: "Pantalón Negro Lino",
+                    tallas: ['10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'],
+                    precios: {
+                        '10': 42000, '12': 43000, '14': 44000, '16': 45000, 
+                        'S': 46000, 'M': 47000, 'L': 48000, 'XL': 49000, 'XXL': 50000
+                    }
+                },
+                saco_nina: {
+                    nombre: "Saco Niña",
+                    tallas: ['10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'],
+                    precios: {
+                        '10': 70000, '12': 74000, '14': 76000, '16': 78000, 
+                        'S': 80000, 'M': 82000, 'L': 84000, 'XL': 86000, 'XXL': 88000
+                    }
+                },
+                camisa: {
+                    nombre: "Camisa",
+                    tallas: ['10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'],
+                    precios: {
+                        '10': 37000, '12': 39000, '14': 41000, '16': 43000, 
+                        'S': 45000, 'M': 47000, 'L': 49000, 'XL': 51000, 'XXL': 53000
+                    }
+                },
+                overol: {
+                    nombre: "Overol",
+                    tallas: ['S', 'M', 'L', 'XL', 'XXL'],
+                    precios: {
+                        'S': 75000, 'M': 78000, 'L': 80000, 'XL': 82000, 'XXL': 84000
+                    }
+                },
+                bata_azul: {
+                    nombre: "Bata Azul",
+                    tallas: ['12', '14', '16'],
+                    precios: {
+                        '12': 55000, '14': 55000, '16': 55000, 'S': 55000, 'M': 55000, 'L': 55000, 'XL': 55000
+                    },
+                    medidas: true // Indica que tiene medidas adicionales
+                },
+                bata_blanca: {
+                    nombre: "Bata Blanca",
+                    tallas: ['12', '14', '16'],
+                    precios: {
+                        '12': 55000, '14': 55000, '16': 55000, 'S': 55000, 'M': 55000, 'L': 55000, 'XL': 55000
+                    },
+                    medidas: true // Indica que tiene medidas adicionales
+                }
             }
         };
 
-        let prendasSeleccionadas = [];
-        let ventasGuardadas = JSON.parse(localStorage.getItem('ventas')) || [];
+        // Aquí puedes agregar el resto de tu código JavaScript para manejar la lógica de la aplicación
+    </script>
 
-        function mostrarSeccion(seccion) {
-            document.querySelectorAll('.seccion-content').forEach(div => {
-                div.style.display = 'none';
-            });
-            document.getElementById(seccion).style.display = 'block';
-            if (seccion === 'inventario') {
-                actualizarInventario();
-            } else if (seccion === 'pedidosPendientes') {
-                actualizarTablaPedidos();
-            } else if (seccion === 'ventasFinalizadas') {
-                actualizarTablaVentasFinalizadas();
-            } else if (seccion === 'totalesVentas') {
-                mostrarTotalesVentas();
-            }
-        }
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+</body>
+</html>
+        <!-- Sección Pedidos Pendientes -->
+        <div id="pedidosPendientes" class="seccion-content" style="display: none;">
+            <div class="card p-4">
+                <h2>Pedidos Pendientes</h2>
+                <table class="table" id="tablaPedidosPendientes">
+                    <thead>
+                        <tr>
+                            <th>Número de Factura</th>
+                            <th>Cliente</th>
+                            <th>Teléfono</th>
+                            <th>Prendas</th>
+                            <th>Total</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Aquí se llenarán los pedidos pendientes -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-        function mostrarPrendas() {
-            const tipoUniforme = document.getElementById('tipoUniforme').value;
-            const listaPrendas = document.getElementById('listaPrendas');
-            listaPrendas.innerHTML = '';
+        <!-- Sección Ventas Finalizadas -->
+        <div id="ventasFinalizadas" class="seccion-content" style="display: none;">
+            <div class="card p-4">
+                <h2>Ventas Finalizadas</h2>
+                <table class="table" id="tablaVentasFinalizadas">
+                    <thead>
+                        <tr>
+                            <th>Número de Factura</th>
+                            <th>Cliente</th>
+                            <th>Teléfono</th>
+                            <th>Prendas</th>
+                            <th>Total</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Aquí se llenarán las ventas finalizadas -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-            Object.entries(PRENDAS[tipoUniforme]).forEach(([key, prenda]) => {
-                const div = document.createElement('div');
-                div.className = 'col-md-4 mb-3';
-                div.innerHTML = `
-                    <div class="card prenda-card" onclick="seleccionarTalla('${key}', '${tipoUniforme}')">
-                        <div class="card-body">
-                            <h5 class="card-title">${prenda.nombre}</h5>
-                            <p class="card-text">Desde: ${formatearPrecio(obtenerPrecioMinimo(prenda))}</p>
-                        </div>
-                    </div>
-                `;
-                listaPrendas.appendChild(div);
-            });
-        }
+        <script>
+            let prendasSeleccionadas = [];
+            let ventasGuardadas = JSON.parse(localStorage.getItem('ventas')) || [];
 
-        function obtenerPrecioMinimo(prenda) {
-            if (prenda.precio) return prenda.precio;
-            const precios = Object.values(prenda.precios).filter(p => p > 0);
-            return Math.min(...precios);
-        }
-
-        function seleccionarTalla(prendaKey, tipoUniforme) {
-            const prenda = PRENDAS[tipoUniforme][prendaKey];
-            const modal = document.createElement('div');
-            modal.className = 'modal fade';
-            modal.innerHTML = `
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">${prenda.nombre}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label class="form-label">Talla</label>
-                                <select class="form-select" id="selectTalla">
-                                    ${prenda.tallas.map(talla => 
-                                        `<option value="${talla}">${talla} - ${formatearPrecio(prenda.precios[talla] || prenda.precio)}</option>`
-                                    ).join('')}
-                                </select>
-                            </div>
-                            ${prenda.medidas ? `
-                            <div class="mb-3">
-                                <label class="form-label">Largo (cm)</label>
-                                <input type="number" class="form-control" id="largo" placeholder="Ingrese el largo">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Busto (cm)</label>
-                                <input type="number" class="form-control" id="busto" placeholder="Ingrese la medida del busto">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Cadera (cm)</label>
-                                <input type="number" class="form-control" id="cadera" placeholder="Ingrese la medida de la cadera">
-                            </div>
-                            ` : ''}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" onclick="agregarPrenda('${prendaKey}', '${tipoUniforme}')" data-bs-dismiss="modal">
-                                Agregar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            const modalInstance = new bootstrap.Modal(modal);
-            modalInstance.show();
-            
-            modal.addEventListener('hidden.bs.modal', () => {
-                modal.remove();
-            });
-        }
-
-        function agregarPrenda(prendaKey, tipoUniforme) {
-            const prenda = PRENDAS[tipoUniforme][prendaKey];
-            const talla = document.getElementById('selectTalla').value;
-            const precio = prenda.precios[talla];
-
-            // Obtener medidas adicionales
-            const largo = document.getElementById('largo') ? document.getElementById('largo').value : null;
-            const busto = document.getElementById('busto') ? document.getElementById('busto').value : null;
-            const cadera = document.getElementById('cadera') ? document.getElementById('cadera').value : null;
-
-            prendasSeleccionadas.push({
-                nombre: prenda.nombre,
-                talla,
-                precio,
-                medidas: {
-                    largo,
-                    busto,
-                    cadera
-                }
-            });
-
-            actualizarTablaPrendas();
-            actualizarTotal();
-        }
-
-        function actualizarTablaPrendas() {
-            const tbody = document.querySelector('#tablaPrendas tbody');
-            tbody.innerHTML = '';
-
-            prendasSeleccionadas.forEach((prenda, index) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${prenda.nombre}</td>
-                    <td>${prenda.talla}</td>
-                    <td>${formatearPrecio(prenda.precio)}</td>
-                    <td>
-                        <button class="btn btn-danger btn-sm" onclick="eliminarPrenda(${index})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function eliminarPrenda(index) {
-            prendasSeleccionadas.splice(index, 1);
-            actualizarTablaPrendas();
-            actualizarTotal();
-        }
-
-        function actualizarTotal() {
-            const total = prendasSeleccionadas.reduce((sum, prenda) => sum + prenda.precio, 0);
-            document.getElementById('totalVenta').textContent = formatearPrecio(total);
-        }
-
-        function guardarVenta(event) {
-            event.preventDefault();
-
-            const venta = {
-                factura: document.getElementById('numeroFactura').value,
-                cliente: document.getElementById('nombreCliente').value,
-                telefono: document.getElementById('telefono').value,
-                metodoPago: document.getElementById('metodoPago').value,
-                estado: document.getElementById('estadoPedido').value,
-                prendas: prendasSeleccionadas,
-                total: prendasSeleccionadas.reduce((sum, prenda) => sum + prenda.precio, 0),
-                fecha: new Date().toISOString(),
-                prendasEntregadas: Array.from(document.getElementById('prendasEntregadasSelect').selectedOptions).map(option => option.value)
-            };
-
-            // Si el estado es "abono", ajustar el total
-            if (venta.estado === 'abono_pendiente') {
-                const abono = parseFloat(document.getElementById('abono').value) || 0;
-                venta.total -= abono;
-            }
-
-            ventasGuardadas.push(venta);
-            localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
-
-            alert('Venta guardada exitosamente');
-            limpiarFormulario();
-        }
-
-        function limpiarFormulario() {
-            document.getElementById('formularioVenta').reset();
-            prendasSeleccionadas = [];
-            actualizarTablaPrendas();
-            actualizarTotal();
-            document.getElementById('divAbono').style.display = 'none';
-            document.getElementById('divPrendasEntregadas').style.display = 'none';
-        }
-
-        function actualizarEstado() {
-            const estado = document.getElementById('estadoPedido').value;
-            document.getElementById('divAbono').style.display = (estado === 'abono_pendiente') ? 'block' : 'none';
-            document.getElementById('divPrendasEntregadas').style.display = (estado === 'cancelado_pendiente' || estado === 'abono_pendiente') ? 'block' : 'none';
-
-            // Llenar el menú desplegable de prendas entregadas
-            const prendasEntregadasSelect = document.getElementById('prendasEntregadasSelect');
-            prendasEntregadasSelect.innerHTML = '';
-            if (estado === 'cancelado_pendiente' || estado === 'abono_pendiente') {
-                prendasSeleccionadas.forEach(prenda => {
-                    const option = document.createElement('option');
-                    option.value = prenda.nombre;
-                    option.textContent = `${prenda.nombre} (${prenda.talla})`;
-                    prendasEntregadasSelect.appendChild(option);
+            function mostrarSeccion(seccion) {
+                document.querySelectorAll('.seccion-content').forEach(div => {
+                    div.style.display = 'none';
                 });
+                document.getElementById(seccion).style.display = 'block';
             }
-        }
 
-        function actualizarSaldo() {
-            const abono = parseFloat(document.getElementById('abono').value) || 0;
-            const total = prendasSeleccionadas.reduce((sum, prenda) => sum + prenda.precio, 0);
-            const nuevoSaldo = total - abono;
-            document.getElementById('totalVenta').textContent = formatearPrecio(nuevoSaldo);
-        }
+            function mostrarPrendas() {
+                const tipoUniforme = document.getElementById('tipoUniforme').value;
+                const listaPrendas = document.getElementById('listaPrendas');
+                listaPrendas.innerHTML = '';
 
-        function actualizarTablaPedidos() {
-            const tbody = document.querySelector('#tablaPedidosPendientes tbody');
-            tbody.innerHTML = '';
-
-            ventasGuardadas.forEach((venta, index) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${venta.factura}</td>
-                    <td>${venta.cliente}</td>
-                    <td>${venta.telefono}</td>
-                    <td>${venta.prendas.map(p => `${p.nombre} (${p.talla})`).join(', ')}</td>
-                    <td>${formatearPrecio(venta.total)}</td>
-                    <td>
-                        <button class="btn btn-success btn-sm" onclick="finalizarVenta(${index})">
-                            Finalizar
-                        </button>
-                        <button class="btn btn-danger btn-sm" onclick="eliminarRecibo(${index})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                `;
-                if (venta.estado === 'cancelado_entregado') {
-                    tr.classList.add('entregado');
+                for (const prendaKey in PRENDAS[tipoUniforme]) {
+                    const prenda = PRENDAS[tipoUniforme][prendaKey];
+                    const div = document.createElement('div');
+                    div.className = 'col-md-4 mb-3';
+                    div.innerHTML = `
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">${prenda.nombre}</h5>
+                                <p class="card-text">Tallas: ${prenda.tallas.join(', ')}</p>
+                                <p class="card-text">Precio: $${formatearPrecio(prenda.precios[prenda.tallas[0]])}</p>
+                                <button class="btn btn-primary" onclick="agregarPrenda('${prendaKey}', '${tipoUniforme}')">Agregar</button>
+                            </div>
+                        </div>
+                    `;
+                    listaPrendas.appendChild(div);
                 }
-                tbody.appendChild(tr);
-            });
-        }
+            }
 
-        function finalizarVenta(index) {
-            ventasGuardadas[index].estado = 'cancelado_entregado';
-            localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
-            actualizarTablaPedidos();
-            actualizarTablaVentasFinalizadas();
-            alert('Venta finalizada exitosamente.');
-        }
+            function agregarPrenda(prendaKey, tipoUniforme) {
+                const prenda = PRENDAS[tipoUniforme][prendaKey];
+                const talla = prompt(`Seleccione una talla (${prenda.tallas.join(', ')})`);
+                if (prenda.tallas.includes(talla)) {
+                    const precio = prenda.precios[talla];
+                    prendasSeleccionadas.push({ nombre: prenda.nombre, talla, precio });
+                    actualizarTablaPrendas();
+                    actualizarTotal();
+                } else {
+                    alert('Talla no válida');
+                }
+            }
 
-        function eliminarRecibo(index) {
-            ventasGuardadas.splice(index, 1);
-            localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
-            actualizarTablaPedidos();
-        }
+            function actualizarTablaPrendas() {
+                const tbody = document.querySelector('#tablaPrendas tbody');
+                tbody.innerHTML = '';
 
-        function actualizarTablaVentasFinalizadas() {
-            const tbody = document.querySelector('#tablaVentasFinalizadas tbody');
-            tbody.innerHTML = '';
-
-            ventasGuardadas.forEach(venta => {
-                if (venta.estado === 'cancelado_entregado') {
+                prendasSeleccionadas.forEach((prenda, index) => {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-                        <td>${venta.factura}</td>
-                        <td>${venta.cliente}</td>
-                        <td>${venta.telefono}</td>
-                        <td>${venta.prendas.map(p => `${p.nombre} (${p.talla})`).join(', ')}</td>
-                        <td>${formatearPrecio(venta.total)}</td>
+                        <td>${prenda.nombre}</td>
+                        <td>${prenda.talla}</td>
+                        <td>${formatearPrecio(prenda.precio)}</td>
                         <td>
-                            <button class="btn btn-danger btn-sm" onclick="eliminarRecibo(${ventasGuardadas.indexOf(venta)})">
+                            <button class="btn btn-danger btn-sm" onclick="eliminarPrenda(${index})">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>
                     `;
                     tbody.appendChild(tr);
-                }
-            });
-        }
+                });
+            }
 
-        function actualizarInventario() {
-            const resumenPrimaria = {};
-            const resumenBachillerato = {};
-            
-            ventasGuardadas.forEach(venta => {
-                venta.prendas.forEach(prenda => {
-                    const key = `${prenda.nombre} - ${prenda.talla}`;
-                    if (venta.estado === 'cancelado_pendiente' || venta.estado === 'abono_pendiente') {
-                        if (venta.metodoPago === 'primaria') {
-                            resumenPrimaria[key] = (resumenPrimaria[key] || 0) + 1;
-                        } else {
-                            resumenBachillerato[key] = (resumenBachillerato[key] || 0) + 1;
-                        }
-                    }
+            function eliminarPrenda(index) {
+                prendasSeleccionadas.splice(index, 1);
+                actualizarTablaPrendas();
+                actualizarTotal();
+            }
+
+            function actualizarTotal() {
+                const total = prendasSeleccionadas.reduce((sum, prenda) => sum + prenda.precio, 0);
+                document.getElementById('totalVenta').textContent = formatearPrecio(total);
+            }
+
+            function guardarVenta(event) {
+                event.preventDefault();
+
+                const venta = {
+                    factura: document.getElementById('numeroFactura').value,
+                    cliente: document.getElementById('nombreCliente').value,
+                    telefono: document.getElementById('telefono').value,
+                    metodoPago: document.getElementById('metodoPago').value,
+                    estado: document.getElementById('estadoPedido').value,
+                    prendas: prendasSeleccionadas,
+                    total: prendasSeleccionadas.reduce((sum, prenda) => sum + prenda.precio, 0),
+                    fecha: new Date().toISOString(),
+                    prendasEntregadas: Array.from(document.getElementById('prendasEntregadasSelect').selectedOptions).map(option => option.value)
+                };
+
+                // Si el estado es "abono", ajustar el total
+                if (venta.estado === 'abono_pendiente') {
+                    const abono = parseFloat(document.getElementById('abono').value) || 0;
+                    venta.total -= abono;
+                }
+
+                ventasGuardadas.push(venta);
+                localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
+
+                alert('Venta guardada exitosamente');
+                limpiarFormulario();
+            }
+
+            function limpiarFormulario() {
+                document.getElementById('formularioVenta').reset();
+                prendasSeleccionadas = [];
+                actualizarTablaPrendas();
+                actualizarTotal();
+                document.getElementById('divAbono').style.display = 'none';
+                document.getElementById('divPrendasEntregadas').style.display = 'none';
+            }
+
+            function actualizarEstado() {
+                const estado = document.getElementById('estadoPedido').value;
+                document.getElementById('divAbono').style.display = (estado === 'abono_pendiente') ? 'block' : 'none';
+                document.getElementById('divPrendasEntregadas').style.display = (estado === 'cancelado_pendiente' || estado === 'abono_pendiente') ? 'block' : 'none';
+            }
+
+            function actualizarSaldo() {
+                const abono = parseFloat(document.getElementById('abono').value) || 0;
+                const total = prendasSeleccionadas.reduce((sum, prenda) => sum + prenda.precio, 0);
+                const nuevoSaldo = total - abono;
+                document.getElementById('totalVenta').textContent = formatearPrecio(nuevoSaldo);
+            }
+
+            function formatearPrecio(precio) {
+                return precio.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }).replace('COP', '').trim();
+            }
+
+            // Inicialización
+            document.addEventListener('DOMContentLoaded', () => {
+                mostrarPrendas();
+                document.getElementById('estadoPedido').addEventListener('change', function() {
+                    actualizarEstado();
                 });
             });
+        </script>
 
-            const inventarioDivPrimaria = document.getElementById('resumenInventarioPrimaria');
-            inventarioDivPrimaria.innerHTML = '<div class="row">';
-            
-            Object.entries(resumenPrimaria).forEach(([prenda, cantidad]) => {
-                inventarioDivPrimaria.innerHTML += `
-                    <div class="col-md-4 mb-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">${prenda}</h5>
-                                <p class="card-text">Cantidad: ${cantidad}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    </div>
+</body>
+</html>
+        <script>
+            // Función para cargar los pedidos pendientes en la tabla
+            function cargarPedidosPendientes() {
+                const tbody = document.querySelector('#tablaPedidosPendientes tbody');
+                tbody.innerHTML = '';
+
+                ventasGuardadas.forEach(venta => {
+                    if (venta.estado === 'cancelado_pendiente') {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${venta.factura}</td>
+                            <td>${venta.cliente}</td>
+                            <td>${venta.telefono}</td>
+                            <td>${venta.prendas.map(p => p.nombre).join(', ')}</td>
+                            <td>${formatearPrecio(venta.total)}</td>
+                            <td>
+                                <button class="btn btn-success btn-sm" onclick="finalizarPedido('${venta.factura}')">Finalizar</button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    }
+                });
+            }
+
+            // Función para cargar las ventas finalizadas en la tabla
+            function cargarVentasFinalizadas() {
+                const tbody = document.querySelector('#tablaVentasFinalizadas tbody');
+                tbody.innerHTML = '';
+
+                ventasGuardadas.forEach(venta => {
+                    if (venta.estado === 'cancelado_entregado' || venta.estado === 'abono_pendiente') {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${venta.factura}</td>
+                            <td>${venta.cliente}</td>
+                            <td>${venta.telefono}</td>
+                            <td>${venta.prendas.map(p => p.nombre).join(', ')}</td>
+                            <td>${formatearPrecio(venta.total)}</td>
+                            <td>${new Date(venta.fecha).toLocaleDateString('es-CO')}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    }
+                });
+            }
+
+            // Función para finalizar un pedido
+            function finalizarPedido(factura) {
+                const venta = ventasGuardadas.find(v => v.factura === factura);
+                if (venta) {
+                    venta.estado = 'cancelado_entregado';
+                    localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
+                    alert('Pedido finalizado exitosamente');
+                    cargarPedidosPendientes();
+                    cargarVentasFinalizadas();
+                }
+            }
+
+            // Inicialización de las tablas al cargar la página
+            document.addEventListener('DOMContentLoaded', () => {
+                cargarPedidosPendientes();
+                cargarVentasFinalizadas();
             });
-            
-            inventarioDivPrimaria.innerHTML += '</div>';
+        </script>
+    </div>
+</body>
+</html>
+        <!-- Sección de ayuda contextual -->
+        <div id="ayudaContextual" class="seccion-content" style="display: none;">
+            <div class="card p-4">
+                <h2>Ayuda Contextual</h2>
+                <p>Aquí puedes encontrar información sobre cómo usar el sistema de ventas.</p>
+                <ul>
+                    <li><strong>Nueva Venta:</strong> Selecciona el tipo de uniforme y agrega las prendas deseadas.</li>
+                    <li><strong>Pedidos Pendientes:</strong> Visualiza y finaliza los pedidos que están pendientes.</li>
+                    <li><strong>Ventas Finalizadas:</strong> Revisa las ventas que ya han sido completadas.</li>
+                </ul>
+            </div>
+        </div>
 
-            const inventarioDivBachillerato = document.getElementById('resumenInventarioBachillerato');
-            inventarioDivBachillerato.innerHTML = '<div class="row">';
-            
-            Object.entries(resumenBachillerato).forEach(([prenda, cantidad]) => {
-                inventarioDivBachillerato.innerHTML += `
-                    <div class="col-md-4 mb-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">${prenda}</h5>
-                                <p class="card-text">Cantidad: ${cantidad}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
+        <!-- Botón para mostrar ayuda contextual -->
+        <div class="text-center mt-4">
+            <button class="btn btn-info" onclick="mostrarSeccion('ayudaContextual')">Mostrar Ayuda</button>
+        </div>
+
+        <script>
+            // Función para mostrar la sección de ayuda contextual
+            function mostrarAyuda() {
+                mostrarSeccion('ayudaContextual');
+            }
+
+            // Inicialización de eventos
+            document.addEventListener('DOMContentLoaded', () => {
+                cargarPedidosPendientes();
+                cargarVentasFinalizadas();
+                document.getElementById('estadoPedido').addEventListener('change', function() {
+                    actualizarEstado();
+                });
             });
-            
-            inventarioDivBachillerato.innerHTML += '</div>';
-        }
+        </script>
 
-        function mostrarTotalesVentas() {
-            const totalEfectivo = ventasGuardadas.filter(v => v.metodoPago === 'efectivo').reduce((sum, v) => sum + v.total, 0);
-            const totalNequi = ventasGuardadas.filter(v => v.metodoPago === 'nequi').reduce((sum, v) => sum + v.total, 0);
-            const totalDaviplata = ventasGuardadas.filter(v => v.metodoPago === 'daviplata').reduce((sum, v) => sum + v.total, 0);
-            const totalVentas = ventasGuardadas.reduce((sum, v) => sum + v.total, 0);
-            const ventasFinalizadas = ventasGuardadas.filter(v => v.estado === 'cancelado_entregado').reduce((sum, v) => sum + v.total, 0);
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    </div>
+</body>
+</html>
+        <!-- Validación de formulario -->
+        <script>
+            // Función para validar el formulario antes de guardar la venta
+            function validarFormulario() {
+                const numeroFactura = document.getElementById('numeroFactura').value;
+                const nombreCliente = document.getElementById('nombreCliente').value;
+                const telefono = document.getElementById('telefono').value;
 
-            document.getElementById('totalEfectivo').textContent = formatearPrecio(totalEfectivo);
-            document.getElementById('totalNequi').textContent = formatearPrecio(totalNequi);
-            document.getElementById('totalDaviplata').textContent = formatearPrecio(totalDaviplata);
-            document.getElementById('ventasTotales').textContent = formatearPrecio(totalVentas);
-            document.getElementById('ventasFinalizadas').textContent = formatearPrecio(ventasFinalizadas);
-        }
+                if (!numeroFactura || !nombreCliente || !telefono) {
+                    alert('Por favor, complete todos los campos requeridos.');
+                    return false;
+                }
 
-        function cancelarTodo() {
-            ventasGuardadas = [];
-            localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
-            alert('Todas las ventas han sido canceladas.');
-            actualizarTablaPedidos();
-        }
+                if (prendasSeleccionadas.length === 0) {
+                    alert('Debe agregar al menos una prenda.');
+                    return false;
+                }
 
-        function hacerAbono() {
-            const abono = parseFloat(document.getElementById('abono').value) || 0;
-            alert(`Se ha realizado un abono de ${formatearPrecio(abono)}`);
-        }
+                return true;
+            }
 
-        function descargarExcel() {
-            const datos = ventasGuardadas.map(venta => ({
-                'Número Factura': venta.factura,
-                'Cliente': venta.cliente,
-                'Teléfono': venta.telefono,
-                'Método Pago': venta.metodoPago,
-                'Estado': venta.estado,
-                'Total': formatearPrecio(venta.total),
-                'Fecha': new Date(venta.fecha).toLocaleDateString(),
-                'Prendas': venta.prendas.map(p => `${p.nombre} (${p.talla})`).join(', ')
-            }));
+            // Modificación de la función guardarVenta para incluir validación
+            function guardarVenta(event) {
+                event.preventDefault();
 
-            const worksheet = XLSX.utils.json_to_sheet(datos);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, "Ventas");
-            XLSX.writeFile(workbook, `Ventas_${new Date().toLocaleDateString()}.xlsx`);
-        }
+                if (!validarFormulario()) {
+                    return; // Detener la ejecución si la validación falla
+                }
 
-        function formatearPrecio(precio) {
-            return precio.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }).replace('COP', '').trim();
-        }
+                const venta = {
+                    factura: document.getElementById('numeroFactura').value,
+                    cliente: document.getElementById('nombreCliente').value,
+                    telefono: document.getElementById('telefono').value,
+                    metodoPago: document.getElementById('metodoPago').value,
+                    estado: document.getElementById('estadoPedido').value,
+                    prendas: prendasSeleccionadas,
+                    total: prendasSeleccionadas.reduce((sum, prenda) => sum + prenda.precio, 0),
+                    fecha: new Date().toISOString(),
+                    prendasEntregadas: Array.from(document.getElementById('prendasEntregadasSelect').selectedOptions).map(option => option.value)
+                };
 
-        // Inicialización
-        document.addEventListener('DOMContentLoaded', () => {
-            mostrarPrendas();
-            document.getElementById('estadoPedido').addEventListener('change', function() {
-                actualizarEstado();
+                // Si el estado es "abono", ajustar el total
+                if (venta.estado === 'abono_pendiente') {
+                    const abono = parseFloat(document.getElementById('abono').value) || 0;
+                    venta.total -= abono;
+                }
+
+                ventasGuardadas.push(venta);
+                localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
+
+                alert('Venta guardada exitosamente');
+                limpiarFormulario();
+            }
+        </script>
+                <!-- Mejora de la experiencia del usuario -->
+        <script>
+            // Función para mostrar un mensaje de éxito
+            function mostrarMensajeExito(mensaje) {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-success';
+                alertDiv.textContent = mensaje;
+                document.body.prepend(alertDiv);
+
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 3000); // Eliminar el mensaje después de 3 segundos
+            }
+
+            // Modificación de la función guardarVenta para usar el nuevo mensaje
+            function guardarVenta(event) {
+                event.preventDefault();
+
+                if (!validarFormulario()) {
+                    return; // Detener la ejecución si la validación falla
+                }
+
+                const venta = {
+                    factura: document.getElementById('numeroFactura').value,
+                    cliente: document.getElementById('nombreCliente').value,
+                    telefono: document.getElementById('telefono').value,
+                    metodoPago: document.getElementById('metodoPago').value,
+                    estado: document.getElementById('estadoPedido').value,
+                    prendas: prendasSeleccionadas,
+                    total: prendasSeleccionadas.reduce((sum, prenda) => sum + prenda.precio, 0),
+                    fecha: new Date().toISOString(),
+                    prendasEntregadas: Array.from(document.getElementById('prendasEntregadasSelect').selectedOptions).map(option => option.value)
+                };
+
+                // Si el estado es "abono", ajustar el total
+                if (venta.estado === 'abono_pendiente') {
+                    const abono = parseFloat(document.getElementById('abono').value) || 0;
+                    venta.total -= abono;
+                }
+
+                ventasGuardadas.push(venta);
+                localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
+
+                mostrarMensajeExito('Venta guardada exitosamente');
+                limpiarFormulario();
+            }
+        </script>
+                <!-- Sección de inventario -->
+        <div id="inventario" class="seccion-content" style="display: none;">
+            <div class="card p-4">
+                <h2>Inventario</h2>
+                <table class="table" id="tablaInventario">
+                    <thead>
+                        <tr>
+                            <th>Prenda</th>
+                            <th>Tallas</th>
+                            <th>Precios</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Aquí se llenarán los datos del inventario -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script>
+            // Función para cargar el inventario en la tabla
+            function cargarInventario() {
+                const tbody = document.querySelector('#tablaInventario tbody');
+                tbody.innerHTML = '';
+
+                for (const tipo in PRENDAS) {
+                    for (const prendaKey in PRENDAS[tipo]) {
+                        const prenda = PRENDAS[tipo][prendaKey];
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${prenda.nombre}</td>
+                            <td>${prenda.tallas.join(', ')}</td>
+                            <td>${Object.entries(prenda.precios).map(([talla, precio]) => `${talla}: $${formatearPrecio(precio)}`).join('<br>')}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    }
+                }
+            }
+
+            // Inicialización de la sección de inventario
+            document.addEventListener('DOMContentLoaded', () => {
+                cargarInventario();
             });
-        });
-    </script>
+        </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+        <!-- Footer -->
+        <footer class="text-center mt-4">
+            <p>&copy; 2023 Uniformes Don Bosco. Todos los derechos reservados.</p>
+        </footer>
+    </div>
 </body>
 </html>
